@@ -15,7 +15,8 @@ public class Board {
     public static final String BLACK_BG = "\u001B[100m";
 
     private static final String RED = "\u001B[31m";
-    private static final String TRY_TO_TAKE_KING = RED + "You try to take the enemy king! " + RESET_COLOR;;
+    private static final String TRY_TO_TAKE_KING = RED + "You try to take the enemy king! " + RESET_COLOR;
+    ;
 
     private static final Position[] BLACK_PAWNS_STARTING_POSITIONS = {
             Position.A7, Position.B7, Position.C7, Position.D7, Position.E7, Position.F7, Position.G7, Position.H7

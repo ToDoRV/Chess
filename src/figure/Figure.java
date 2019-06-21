@@ -11,7 +11,7 @@ public abstract class Figure {
 
     private static final String RESET_COLOR = "\u001B[0m";
     private static final String RED = "\u001B[31m";
-    static final String INVALID_MOVE_MESSAGE = RED + "Invalid move! "  + RESET_COLOR;
+    static final String INVALID_MOVE_MESSAGE = RED + "Invalid move! " + RESET_COLOR;
 
     Position position;
     String color;
@@ -30,5 +30,6 @@ public abstract class Figure {
     }
 
     public abstract void printFigure();
+
     public abstract int canMove(Position toPosition, Player player, Figure[][] board);
 }

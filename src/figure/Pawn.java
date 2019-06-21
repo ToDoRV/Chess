@@ -48,7 +48,7 @@ public class Pawn extends Figure {
 
         if (tryTwoWhiteMovesForward(toPosition)) {
             if (isThereFigureOn(toPosition.getRow() + 1, toPosition.getColumn(), board)
-                    || isThereFigureOn(toPosition, board)){
+                    || isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
                 return ERROR_CODE_TRY_AGAIN;
             }
@@ -92,7 +92,7 @@ public class Pawn extends Figure {
 
         if (tryTwoBlackMovesForward(toPosition)) {
             if (isThereFigureOn(toPosition.getRow() - 1, toPosition.getColumn(), board)
-                    || isThereFigureOn(toPosition, board)){
+                    || isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
                 return ERROR_CODE_TRY_AGAIN;
             }
