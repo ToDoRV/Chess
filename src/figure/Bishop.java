@@ -2,7 +2,7 @@ package figure;
 
 import enums.Position;
 
-public class Bishop extends Figure{
+public class Bishop extends Figure {
 
     public static final String BISHOP_SIGN = " B ";
 
