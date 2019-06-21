@@ -12,5 +12,9 @@ public abstract class Figure {
         this.color = color;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public abstract void printFigure();
 }
