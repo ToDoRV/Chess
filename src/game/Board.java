@@ -1,3 +1,5 @@
+package game;
+
 import enums.Position;
 import figure.*;
 
@@ -120,7 +122,6 @@ public class Board {
     }
 
     public int moveFigure(Position fromPosition, Position toPosition, Player player) {
-        //ToDo
-        return Game.ERROR_CODE_SUCCESS;
+        return board[fromPosition.getRow()][fromPosition.getColumn()].moveTo(toPosition, player);
     }
 }

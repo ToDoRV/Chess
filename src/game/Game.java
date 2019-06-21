@@ -1,3 +1,5 @@
+package game;
+
 import enums.Position;
 
 import java.util.Scanner;
