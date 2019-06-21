@@ -1,16 +1,18 @@
 package game;
 
+import enums.Color;
+
 public class Player {
 
-    private String colorOfFigures;
+    private Color colorOfFigures;
     private String prompt;
 
-    public Player(String colorOfFigures, String prompt) {
+    public Player(Color colorOfFigures, String prompt) {
         this.colorOfFigures = colorOfFigures;
         this.prompt = prompt;
     }
 
-    public String getColorOfFigures() {
+    public Color getColorOfFigures() {
         return colorOfFigures;
     }
 

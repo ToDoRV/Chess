@@ -1,12 +1,10 @@
 package figure;
 
+import enums.Color;
 import enums.Position;
-import game.Board;
 import game.Player;
 
 public class Pawn extends Figure {
-
-    private static final String WHITE_FIGURE = Board.WHITE_FIGURE;
 
     private static final int ONE_MOVE = 1;
     private static final int TWO_MOVES = 2;
@@ -15,19 +13,19 @@ public class Pawn extends Figure {
 
     private boolean firstMove;
 
-    public Pawn(Position position, String color) {
+    public Pawn(Position position, Color color) {
         super(position, color);
         firstMove = true;
     }
 
     @Override
     public void printFigure() {
-        System.out.print(color + PAWN_SIGN);
+        System.out.print(color.getColor() + PAWN_SIGN);
     }
 
     @Override
     public int canMove(Position toPosition, Player player, Figure[][] board) {
-        if (color.equals(WHITE_FIGURE)) {
+        if (color.equals(Color.WhiteFigure)) {
             return canMoveWithWhitePawn(toPosition, player, board);
         }
         return canMoveWithBlackPawn(toPosition, player, board);
@@ -39,10 +37,12 @@ public class Pawn extends Figure {
                 System.out.print(INVALID_MOVE_MESSAGE);
                 return ERROR_CODE_TRY_AGAIN;
             }
+            this.firstMove = false;
             return ERROR_CODE_SUCCESS;
         }
 
         if (tryWhiteDiagonalMove(toPosition) && isThereEnemyFigureOn(toPosition, player, board)) {
+            this.firstMove = false;
             return ERROR_CODE_SUCCESS;
         }
 
@@ -91,7 +91,7 @@ public class Pawn extends Figure {
         }
 
         if (tryTwoBlackMovesForward(toPosition)) {
-            if (isThereFigureOn(toPosition.getRow() - 1, toPosition.getColumn(), board)
+            if (isThereFigureOn(toPosition.getRow() - ONE_MOVE, toPosition.getColumn(), board)
                     || isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
                 return ERROR_CODE_TRY_AGAIN;

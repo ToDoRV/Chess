@@ -1,5 +1,6 @@
 package game;
 
+import enums.Color;
 import enums.Position;
 
 import java.util.Scanner;
@@ -10,29 +11,28 @@ public class Game {
     private static final String MOVE_FIGURE_COMMAND = "move";
     private static final String MOVE_FIGURE_AUXILIARY_COMMAND = "to";
 
-    //ANSI colors
-    private static final String RESET_COLOR = "\u001B[0m";
-    private static final String UNDERLINE = "\u001B[4m";
-    private static final String GREEN = "\u001B[32m";
-    private static final String RED = "\u001B[31m";
-
     //messages
-    private static final String WELCOME_MESSAGE = UNDERLINE + "   Welcome to CHESS GAME!   " + RESET_COLOR;
+    private static final String WELCOME_MESSAGE =
+            Color.Underline.getColor() + "   Welcome to CHESS GAME!   " + Color.ResetColor.getColor();
     private static final String MOVE_HELP_MESSAGE =
-            "To move the figure write command: "
-                    + GREEN + MOVE_FIGURE_COMMAND + " <position> to <position>" + RESET_COLOR;
+            "To move the figure write command: " + Color.Green.getColor() + MOVE_FIGURE_COMMAND
+                    + " <position> to <position>" + Color.ResetColor.getColor();
     private static final String POSITIONS_HELP_MESSAGE =
             "<position> := {A, B, C, D, E, F, G, H} x {1, 2, 3, 4, 5, 6, 7, 8}";
     private static final String END_GAME_HELP_MESSAGE =
-            "To end the game announce: " + GREEN + END_GAME_COMMAND + RESET_COLOR;
+            "To end the game announce: " + Color.Green.getColor() + END_GAME_COMMAND + Color.ResetColor.getColor();
     private static final String GOOD_LUCK_MESSAGE = "GOOD LUCK!";
 
-    private static final String INVALID_POSITION_MESSAGE = RED + "Invalid position! " + RESET_COLOR;
-    private static final String EMPTY_POSITION_MESSAGE = RED + "The selected position is empty! " + RESET_COLOR;
-    private static final String UNALLOWED_ACCESS_MESSAGE
-            = RED + "You are trying to move an enemy figure! " + RESET_COLOR;
-    private static final String INVALID_COMMAND_MESSAGE = RED + "Invalid command! " + RESET_COLOR;
-    private static final String TRY_AGAIN_MESSAGE = RED + "Please try again!" + RESET_COLOR;
+    private static final String INVALID_POSITION_MESSAGE =
+            Color.Red.getColor() + "Invalid position! " + Color.ResetColor.getColor();
+    private static final String EMPTY_POSITION_MESSAGE =
+            Color.Red.getColor() + "The selected position is empty! " + Color.ResetColor.getColor();
+    private static final String UNALLOWED_ACCESS_MESSAGE =
+            Color.Red.getColor() + "You are trying to move an enemy figure! " + Color.ResetColor.getColor();
+    private static final String INVALID_COMMAND_MESSAGE =
+            Color.Red.getColor() + "Invalid command! " + Color.ResetColor.getColor();
+    private static final String TRY_AGAIN_MESSAGE =
+            Color.Red.getColor() + "Please try again!" + Color.ResetColor.getColor();
 
     private static final String WHITE_PLAYER_WIN_MESSAGE
             = "Congratulations, the player with white figures won the game!";
@@ -41,8 +41,6 @@ public class Game {
 
     private static final String WHITE_PLAYER_PROMPT = "player with white figures~S ";
     private static final String BLACK_PLAYER_PROMPT = "player with black figures~S ";
-    private static final String WHITE_FIGURES = Board.WHITE_FIGURE;
-    private static final String BLACK_FIGURES = Board.BLACK_FIGURE;
 
     private static final String WHITE_SIGNS_REGEX = "\\s+";
 
@@ -64,8 +62,8 @@ public class Game {
 
     public Game() {
         this.board = new Board();
-        this.whitePlayer = new Player(WHITE_FIGURES, WHITE_PLAYER_PROMPT);
-        this.blackPlayer = new Player(BLACK_FIGURES, BLACK_PLAYER_PROMPT);
+        this.whitePlayer = new Player(Color.WhiteFigure, WHITE_PLAYER_PROMPT);
+        this.blackPlayer = new Player(Color.BlackFigure, BLACK_PLAYER_PROMPT);
     }
 
     public void play() {
@@ -124,14 +122,14 @@ public class Game {
         String inputLine = input.nextLine();
         String[] arguments = inputLine.split(WHITE_SIGNS_REGEX);
 
-        if (arguments[ACTION_COMMAND_INDEX].equals(MOVE_FIGURE_COMMAND)
-                && arguments[MOVE_FIGURE_AUXILIARY_COMMAND_INDEX].equals(MOVE_FIGURE_AUXILIARY_COMMAND)
-                && arguments.length == COUNT_ARGUMENTS_IN_MOVE_COMMAND_LINE) {
+        if (arguments.length == COUNT_ARGUMENTS_IN_MOVE_COMMAND_LINE
+                && arguments[ACTION_COMMAND_INDEX].equals(MOVE_FIGURE_COMMAND)
+                && arguments[MOVE_FIGURE_AUXILIARY_COMMAND_INDEX].equals(MOVE_FIGURE_AUXILIARY_COMMAND)) {
             return move(arguments, player);
         }
 
-        if (arguments[ACTION_COMMAND_INDEX].equals(END_GAME_COMMAND)
-                && arguments.length == COUNT_ARGUMENTS_IN_END_GAME_COMMAND_LINE) {
+        if (arguments.length == COUNT_ARGUMENTS_IN_END_GAME_COMMAND_LINE
+                && arguments[ACTION_COMMAND_INDEX].equals(END_GAME_COMMAND)) {
             return ERROR_CODE_END_GAME;
         }
 
@@ -147,6 +145,11 @@ public class Game {
             fromPosition = Position.valueOf(arguments[FROM_POSITION_INDEX]);
             toPosition = Position.valueOf(arguments[TO_POSITION_INDEX]);
         } catch (IllegalArgumentException e) {
+            System.out.print(INVALID_POSITION_MESSAGE);
+            return ERROR_CODE_TRY_AGAIN;
+        }
+
+        if (fromPosition.equals(toPosition)) {
             System.out.print(INVALID_POSITION_MESSAGE);
             return ERROR_CODE_TRY_AGAIN;
         }

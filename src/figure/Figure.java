@@ -1,5 +1,6 @@
 package figure;
 
+import enums.Color;
 import game.Game;
 import game.Player;
 import enums.Position;
@@ -9,19 +10,17 @@ public abstract class Figure {
     static final int ERROR_CODE_SUCCESS = Game.ERROR_CODE_SUCCESS;
     static final int ERROR_CODE_TRY_AGAIN = Game.ERROR_CODE_TRY_AGAIN;
 
-    private static final String RESET_COLOR = "\u001B[0m";
-    private static final String RED = "\u001B[31m";
-    static final String INVALID_MOVE_MESSAGE = RED + "Invalid move! " + RESET_COLOR;
+    static final String INVALID_MOVE_MESSAGE = Color.Red.getColor() + "Invalid move! " + Color.ResetColor.getColor();
 
     Position position;
-    String color;
+    Color color;
 
-    public Figure(Position position, String color) {
+    public Figure(Position position, Color color) {
         this.position = position;
         this.color = color;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 

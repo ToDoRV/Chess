@@ -1,5 +1,6 @@
 package game;
 
+import enums.Color;
 import enums.Position;
 import figure.*;
 
@@ -7,16 +8,8 @@ public class Board {
 
     private static final int BOARD_SIZE = 8;
 
-    //ANSI colors
-    public static final String RESET_COLOR = "\u001B[0m";
-    public static final String WHITE_FIGURE = "\u001B[1;30m";
-    public static final String BLACK_FIGURE = "\u001B[1;97m";
-    public static final String YELLOW_BG = "\u001B[43m";
-    public static final String BLACK_BG = "\u001B[100m";
-
-    private static final String RED = "\u001B[31m";
-    private static final String TRY_TO_TAKE_KING = RED + "You try to take the enemy king! " + RESET_COLOR;
-    ;
+    private static final String TRY_TO_TAKE_KING =
+            Color.Red.getColor() + "You try to take the enemy king! " + Color.ResetColor.getColor();
 
     private static final Position[] BLACK_PAWNS_STARTING_POSITIONS = {
             Position.A7, Position.B7, Position.C7, Position.D7, Position.E7, Position.F7, Position.G7, Position.H7
@@ -35,37 +28,37 @@ public class Board {
     }
 
     private void fillBoardWithBlackFigures() {
-        board[Position.A8.getRow()][Position.A8.getColumn()] = new Rook(Position.A8, BLACK_FIGURE);
-        board[Position.B8.getRow()][Position.B8.getColumn()] = new Knight(Position.B8, BLACK_FIGURE);
-        board[Position.C8.getRow()][Position.C8.getColumn()] = new Bishop(Position.C8, BLACK_FIGURE);
-        board[Position.D8.getRow()][Position.D8.getColumn()] = new Queen(Position.D8, BLACK_FIGURE);
-        board[Position.E8.getRow()][Position.E8.getColumn()] = new King(Position.E8, BLACK_FIGURE);
-        board[Position.F8.getRow()][Position.F8.getColumn()] = new Bishop(Position.F8, BLACK_FIGURE);
-        board[Position.G8.getRow()][Position.G8.getColumn()] = new Knight(Position.G8, BLACK_FIGURE);
-        board[Position.H8.getRow()][Position.H8.getColumn()] = new Rook(Position.H8, BLACK_FIGURE);
+        board[Position.A8.getRow()][Position.A8.getColumn()] = new Rook(Position.A8, Color.BlackFigure);
+        board[Position.B8.getRow()][Position.B8.getColumn()] = new Knight(Position.B8, Color.BlackFigure);
+        board[Position.C8.getRow()][Position.C8.getColumn()] = new Bishop(Position.C8, Color.BlackFigure);
+        board[Position.D8.getRow()][Position.D8.getColumn()] = new Queen(Position.D8, Color.BlackFigure);
+        board[Position.E8.getRow()][Position.E8.getColumn()] = new King(Position.E8, Color.BlackFigure);
+        board[Position.F8.getRow()][Position.F8.getColumn()] = new Bishop(Position.F8, Color.BlackFigure);
+        board[Position.G8.getRow()][Position.G8.getColumn()] = new Knight(Position.G8, Color.BlackFigure);
+        board[Position.H8.getRow()][Position.H8.getColumn()] = new Rook(Position.H8, Color.BlackFigure);
 
         for (Position position : BLACK_PAWNS_STARTING_POSITIONS) {
-            board[position.getRow()][position.getColumn()] = new Pawn(position, BLACK_FIGURE);
+            board[position.getRow()][position.getColumn()] = new Pawn(position, Color.BlackFigure);
         }
     }
 
     private void fillBoardWithWhiteFigures() {
         for (Position position : WHITE_PAWNS_STARTING_POSITIONS) {
-            board[position.getRow()][position.getColumn()] = new Pawn(position, WHITE_FIGURE);
+            board[position.getRow()][position.getColumn()] = new Pawn(position, Color.WhiteFigure);
         }
 
-        board[Position.A1.getRow()][Position.A1.getColumn()] = new Rook(Position.A1, WHITE_FIGURE);
-        board[Position.B1.getRow()][Position.B1.getColumn()] = new Knight(Position.B1, WHITE_FIGURE);
-        board[Position.C1.getRow()][Position.C1.getColumn()] = new Bishop(Position.C1, WHITE_FIGURE);
-        board[Position.D1.getRow()][Position.D1.getColumn()] = new Queen(Position.D1, WHITE_FIGURE);
-        board[Position.E1.getRow()][Position.E1.getColumn()] = new King(Position.E1, WHITE_FIGURE);
-        board[Position.F1.getRow()][Position.F1.getColumn()] = new Bishop(Position.F1, WHITE_FIGURE);
-        board[Position.G1.getRow()][Position.G1.getColumn()] = new Knight(Position.G1, WHITE_FIGURE);
-        board[Position.H1.getRow()][Position.H1.getColumn()] = new Rook(Position.H1, WHITE_FIGURE);
+        board[Position.A1.getRow()][Position.A1.getColumn()] = new Rook(Position.A1, Color.WhiteFigure);
+        board[Position.B1.getRow()][Position.B1.getColumn()] = new Knight(Position.B1, Color.WhiteFigure);
+        board[Position.C1.getRow()][Position.C1.getColumn()] = new Bishop(Position.C1, Color.WhiteFigure);
+        board[Position.D1.getRow()][Position.D1.getColumn()] = new Queen(Position.D1, Color.WhiteFigure);
+        board[Position.E1.getRow()][Position.E1.getColumn()] = new King(Position.E1, Color.WhiteFigure);
+        board[Position.F1.getRow()][Position.F1.getColumn()] = new Bishop(Position.F1, Color.WhiteFigure);
+        board[Position.G1.getRow()][Position.G1.getColumn()] = new Knight(Position.G1, Color.WhiteFigure);
+        board[Position.H1.getRow()][Position.H1.getColumn()] = new Rook(Position.H1, Color.WhiteFigure);
     }
 
     public void printBoardFor(Player player) {
-        if (player.getColorOfFigures().equals(WHITE_FIGURE)) {
+        if (player.getColorOfFigures().equals(Color.WhiteFigure)) {
             printBoardForWhitePlayer();
         } else {
             printBoardForBlackPlayer();
@@ -80,7 +73,7 @@ public class Board {
                 printGridBackground(i, j);
                 printGridForeground(i, j);
             }
-            System.out.println(RESET_COLOR);
+            System.out.println(Color.ResetColor.getColor());
         }
         System.out.println("   A  B  C  D  E  F  G  H");
         System.out.println();
@@ -94,7 +87,7 @@ public class Board {
                 printGridBackground(i, j);
                 printGridForeground(i, j);
             }
-            System.out.println(RESET_COLOR);
+            System.out.println(Color.ResetColor.getColor());
         }
         System.out.println("   H  G  F  E  D  C  B  A");
         System.out.println();
@@ -102,9 +95,9 @@ public class Board {
 
     private void printGridBackground(int row, int column) {
         if ((row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0)) {
-            System.out.print(YELLOW_BG);
+            System.out.print(Color.YellowBG.getColor());
         } else {
-            System.out.print(BLACK_BG);
+            System.out.print(Color.BlackBG.getColor());
         }
     }
 
@@ -143,9 +136,9 @@ public class Board {
         }
 
         board[toPosition.getRow()][toPosition.getColumn()] = board[fromPosition.getRow()][fromPosition.getColumn()];
+        board[toPosition.getRow()][toPosition.getColumn()].setPosition(toPosition);
         board[fromPosition.getRow()][fromPosition.getColumn()] = null;
 
-        board[toPosition.getRow()][toPosition.getColumn()].setPosition(toPosition);
         return Game.ERROR_CODE_SUCCESS;
     }
 }
