@@ -1,14 +1,11 @@
 package figure;
 
 import enums.Color;
-import game.Game;
+import enums.ErrorCode;
 import game.Player;
 import enums.Position;
 
 public abstract class Figure {
-
-    static final int ERROR_CODE_SUCCESS = Game.ERROR_CODE_SUCCESS;
-    static final int ERROR_CODE_TRY_AGAIN = Game.ERROR_CODE_TRY_AGAIN;
 
     static final String INVALID_MOVE_MESSAGE = Color.Red.getColor() + "Invalid move! " + Color.ResetColor.getColor();
 
@@ -30,5 +27,5 @@ public abstract class Figure {
 
     public abstract void printFigure();
 
-    public abstract int canMove(Position toPosition, Player player, Figure[][] board);
+    public abstract ErrorCode canMove(Position toPosition, Player player, Figure[][] board);
 }

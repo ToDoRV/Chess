@@ -1,6 +1,7 @@
 package game;
 
 import enums.Color;
+import enums.ErrorCode;
 import enums.Position;
 import figure.*;
 
@@ -118,27 +119,27 @@ public class Board {
                 .equals(player.getColorOfFigures());
     }
 
-    public int moveFigure(Position fromPosition, Position toPosition, Player player) {
-        int errorCode = board[fromPosition.getRow()][fromPosition.getColumn()].canMove(toPosition, player, board);
+    public ErrorCode moveFigure(Position fromPosition, Position toPosition, Player player) {
+        ErrorCode errorCode = board[fromPosition.getRow()][fromPosition.getColumn()].canMove(toPosition, player, board);
 
-        if (errorCode == Game.ERROR_CODE_SUCCESS) {
+        if (errorCode.equals(ErrorCode.Success)) {
             errorCode = move(fromPosition, toPosition);
         }
 
         return errorCode;
     }
 
-    private int move(Position fromPosition, Position toPosition) {
+    private ErrorCode move(Position fromPosition, Position toPosition) {
         if (board[toPosition.getRow()][toPosition.getColumn()] != null
                 && board[toPosition.getRow()][toPosition.getColumn()] instanceof King) {
             System.out.print(TRY_TO_TAKE_KING);
-            return Game.ERROR_CODE_TRY_AGAIN;
+            return ErrorCode.TryAgain;
         }
 
         board[toPosition.getRow()][toPosition.getColumn()] = board[fromPosition.getRow()][fromPosition.getColumn()];
         board[toPosition.getRow()][toPosition.getColumn()].setPosition(toPosition);
         board[fromPosition.getRow()][fromPosition.getColumn()] = null;
 
-        return Game.ERROR_CODE_SUCCESS;
+        return ErrorCode.Success;
     }
 }

@@ -1,6 +1,7 @@
 package game;
 
 import enums.Color;
+import enums.ErrorCode;
 import enums.Position;
 
 import java.util.Scanner;
@@ -52,10 +53,6 @@ public class Game {
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 3;
 
-    public static final int ERROR_CODE_SUCCESS = 1;
-    public static final int ERROR_CODE_END_GAME = 0;
-    public static final int ERROR_CODE_TRY_AGAIN = -1;
-
     private Board board;
     private Player whitePlayer;
     private Player blackPlayer;
@@ -74,47 +71,47 @@ public class Game {
         System.out.println(END_GAME_HELP_MESSAGE);
         System.out.println(GOOD_LUCK_MESSAGE);
 
-        int errorCode;
+        ErrorCode errorCode;
 
         while (true) {
             errorCode = playWith(whitePlayer);
 
-            if (errorCode == ERROR_CODE_END_GAME) {
+            if (errorCode.equals(ErrorCode.EndGame)) {
                 System.out.println(BLACK_PLAYER_WIN_MESSAGE);
                 return;
             }
 
             errorCode = playWith(blackPlayer);
 
-            if (errorCode == ERROR_CODE_END_GAME) {
+            if (errorCode.equals(ErrorCode.EndGame)) {
                 System.out.println(WHITE_PLAYER_WIN_MESSAGE);
                 return;
             }
         }
     }
 
-    private int playWith(Player player) {
+    private ErrorCode playWith(Player player) {
         board.printBoardFor(player);
 
-        int errorCode;
+        ErrorCode errorCode;
 
         do {
             errorCode = executeCommandFrom(player);
 
-            if (errorCode == ERROR_CODE_END_GAME) {
+            if (errorCode.equals(ErrorCode.EndGame)) {
                 return errorCode;
             }
 
-            if (errorCode == ERROR_CODE_TRY_AGAIN) {
+            if (errorCode.equals(ErrorCode.TryAgain)) {
                 System.out.println(TRY_AGAIN_MESSAGE);
             }
 
-        } while (errorCode != ERROR_CODE_SUCCESS);
+        } while (!errorCode.equals(ErrorCode.Success));
 
         return errorCode;
     }
 
-    private int executeCommandFrom(Player player) {
+    private ErrorCode executeCommandFrom(Player player) {
         String prompt = player.getPrompt();
         System.out.print(prompt);
 
@@ -130,14 +127,14 @@ public class Game {
 
         if (arguments.length == COUNT_ARGUMENTS_IN_END_GAME_COMMAND_LINE
                 && arguments[ACTION_COMMAND_INDEX].equals(END_GAME_COMMAND)) {
-            return ERROR_CODE_END_GAME;
+            return ErrorCode.EndGame;
         }
 
         System.out.print(INVALID_COMMAND_MESSAGE);
-        return ERROR_CODE_TRY_AGAIN;
+        return ErrorCode.TryAgain;
     }
 
-    private int move(String[] arguments, Player player) {
+    private ErrorCode move(String[] arguments, Player player) {
         Position fromPosition;
         Position toPosition;
 
@@ -146,22 +143,22 @@ public class Game {
             toPosition = Position.valueOf(arguments[TO_POSITION_INDEX]);
         } catch (IllegalArgumentException e) {
             System.out.print(INVALID_POSITION_MESSAGE);
-            return ERROR_CODE_TRY_AGAIN;
+            return ErrorCode.TryAgain;
         }
 
         if (fromPosition.equals(toPosition)) {
             System.out.print(INVALID_POSITION_MESSAGE);
-            return ERROR_CODE_TRY_AGAIN;
+            return ErrorCode.TryAgain;
         }
 
         if (board.checkUnavailableOfFigure(fromPosition)) {
             System.out.print(EMPTY_POSITION_MESSAGE);
-            return ERROR_CODE_TRY_AGAIN;
+            return ErrorCode.TryAgain;
         }
 
         if (board.checkForForeignPossess(fromPosition, player)) {
             System.out.print(UNALLOWED_ACCESS_MESSAGE);
-            return ERROR_CODE_TRY_AGAIN;
+            return ErrorCode.TryAgain;
         }
 
         return board.moveFigure(fromPosition, toPosition, player);

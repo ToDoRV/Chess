@@ -1,6 +1,7 @@
 package figure;
 
 import enums.Color;
+import enums.ErrorCode;
 import enums.Position;
 import game.Player;
 
@@ -18,8 +19,8 @@ public class King extends Figure {
     }
 
     @Override
-    public int canMove(Position toPosition, Player player, Figure[][] board) {
+    public ErrorCode canMove(Position toPosition, Player player, Figure[][] board) {
         //ToDo
-        return ERROR_CODE_SUCCESS;
+        return ErrorCode.Success;
     }
 }

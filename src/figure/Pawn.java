@@ -1,6 +1,7 @@
 package figure;
 
 import enums.Color;
+import enums.ErrorCode;
 import enums.Position;
 import game.Player;
 
@@ -24,40 +25,40 @@ public class Pawn extends Figure {
     }
 
     @Override
-    public int canMove(Position toPosition, Player player, Figure[][] board) {
+    public ErrorCode canMove(Position toPosition, Player player, Figure[][] board) {
         if (color.equals(Color.WhiteFigure)) {
             return canMoveWithWhitePawn(toPosition, player, board);
         }
         return canMoveWithBlackPawn(toPosition, player, board);
     }
 
-    private int canMoveWithWhitePawn(Position toPosition, Player player, Figure[][] board) {
+    private ErrorCode canMoveWithWhitePawn(Position toPosition, Player player, Figure[][] board) {
         if (tryOneWhiteMoveForward(toPosition)) {
             if (isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
-                return ERROR_CODE_TRY_AGAIN;
+                return ErrorCode.TryAgain;
             }
             this.firstMove = false;
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         if (tryWhiteDiagonalMove(toPosition) && isThereEnemyFigureOn(toPosition, player, board)) {
             this.firstMove = false;
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         if (tryTwoWhiteMovesForward(toPosition)) {
             if (isThereFigureOn(toPosition.getRow() + 1, toPosition.getColumn(), board)
                     || isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
-                return ERROR_CODE_TRY_AGAIN;
+                return ErrorCode.TryAgain;
             }
             this.firstMove = false;
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         System.out.print(INVALID_MOVE_MESSAGE);
-        return ERROR_CODE_TRY_AGAIN;
+        return ErrorCode.TryAgain;
     }
 
     private boolean tryOneWhiteMoveForward(Position toPosition) {
@@ -77,31 +78,31 @@ public class Pawn extends Figure {
                 && position.getColumn() == toPosition.getColumn();
     }
 
-    private int canMoveWithBlackPawn(Position toPosition, Player player, Figure[][] board) {
+    private ErrorCode canMoveWithBlackPawn(Position toPosition, Player player, Figure[][] board) {
         if (tryOneBlackMoveForward(toPosition)) {
             if (isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
-                return ERROR_CODE_TRY_AGAIN;
+                return ErrorCode.TryAgain;
             }
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         if (tryBlackDiagonalMove(toPosition) && isThereEnemyFigureOn(toPosition, player, board)) {
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         if (tryTwoBlackMovesForward(toPosition)) {
             if (isThereFigureOn(toPosition.getRow() - ONE_MOVE, toPosition.getColumn(), board)
                     || isThereFigureOn(toPosition, board)) {
                 System.out.print(INVALID_MOVE_MESSAGE);
-                return ERROR_CODE_TRY_AGAIN;
+                return ErrorCode.TryAgain;
             }
             this.firstMove = false;
-            return ERROR_CODE_SUCCESS;
+            return ErrorCode.Success;
         }
 
         System.out.print(INVALID_MOVE_MESSAGE);
-        return ERROR_CODE_TRY_AGAIN;
+        return ErrorCode.TryAgain;
     }
 
     private boolean tryOneBlackMoveForward(Position toPosition) {
