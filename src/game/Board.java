@@ -14,6 +14,9 @@ public class Board {
     public static final String YELLOW_BG = "\u001B[43m";
     public static final String BLACK_BG = "\u001B[100m";
 
+    private static final String RED = "\u001B[31m";
+    private static final String TRY_TO_TAKE_KING = RED + "You try to take the enemy king! " + RESET_COLOR;;
+
     private static final Position[] BLACK_PAWNS_STARTING_POSITIONS = {
             Position.A7, Position.B7, Position.C7, Position.D7, Position.E7, Position.F7, Position.G7, Position.H7
     };
@@ -122,6 +125,26 @@ public class Board {
     }
 
     public int moveFigure(Position fromPosition, Position toPosition, Player player) {
-        return board[fromPosition.getRow()][fromPosition.getColumn()].moveTo(toPosition, player);
+        int errorCode = board[fromPosition.getRow()][fromPosition.getColumn()].canMove(toPosition, player, board);
+
+        if (errorCode == Game.ERROR_CODE_SUCCESS) {
+            errorCode = move(fromPosition, toPosition);
+        }
+
+        return errorCode;
+    }
+
+    private int move(Position fromPosition, Position toPosition) {
+        if (board[toPosition.getRow()][toPosition.getColumn()] != null
+                && board[toPosition.getRow()][toPosition.getColumn()] instanceof King) {
+            System.out.print(TRY_TO_TAKE_KING);
+            return Game.ERROR_CODE_TRY_AGAIN;
+        }
+
+        board[toPosition.getRow()][toPosition.getColumn()] = board[fromPosition.getRow()][fromPosition.getColumn()];
+        board[fromPosition.getRow()][fromPosition.getColumn()] = null;
+
+        board[toPosition.getRow()][toPosition.getColumn()].setPosition(toPosition);
+        return Game.ERROR_CODE_SUCCESS;
     }
 }
