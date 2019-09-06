@@ -121,17 +121,4 @@ public class Pawn extends Figure {
                 && position.getRow() + TWO_MOVES == toPosition.getRow()
                 && position.getColumn() == toPosition.getColumn();
     }
-
-    private boolean isThereFigureOn(Position position, Figure[][] board) {
-        return board[position.getRow()][position.getColumn()] != null;
-    }
-
-    private boolean isThereFigureOn(int row, int column, Figure[][] board) {
-        return board[row][column] != null;
-    }
-
-    private boolean isThereEnemyFigureOn(Position position, Player player, Figure[][] board) {
-        return isThereFigureOn(position, board)
-                && !board[position.getRow()][position.getColumn()].getColor().equals(player.getColorOfFigures());
-    }
 }
