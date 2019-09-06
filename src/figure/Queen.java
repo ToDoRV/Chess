@@ -20,7 +20,21 @@ public class Queen extends Figure {
 
     @Override
     public ErrorCode canMove(Position toPosition, Player player, Figure[][] board) {
-        //ToDo
-        return ErrorCode.Success;
+        ErrorCode errorCode;
+        Rook rook = new Rook(position, color);
+        errorCode = rook.canMove(toPosition, player, board);
+
+        if (errorCode.equals(ErrorCode.Success)) {
+            return ErrorCode.Success;
+        }
+
+        Bishop bishop = new Bishop(position, color);
+        errorCode = bishop.canMove(toPosition, player, board);
+
+        if (errorCode.equals(ErrorCode.Success)) {
+            return ErrorCode.Success;
+        }
+
+        return ErrorCode.TryAgain;
     }
 }
