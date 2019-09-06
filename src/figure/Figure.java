@@ -28,4 +28,22 @@ public abstract class Figure {
     public abstract void printFigure();
 
     public abstract ErrorCode canMove(Position toPosition, Player player, Figure[][] board);
+
+    protected boolean isThereFigureOn(Position position, Figure[][] board) {
+        return board[position.getRow()][position.getColumn()] != null;
+    }
+
+    protected boolean isThereFigureOn(int row, int column, Figure[][] board) {
+        return board[row][column] != null;
+    }
+
+    protected boolean isThereOwnFigureOn(Position position, Player player, Figure[][] board) {
+        return isThereFigureOn(position, board)
+                && board[position.getRow()][position.getColumn()].getColor().equals(player.getColorOfFigures());
+    }
+
+    protected boolean isThereEnemyFigureOn(Position position, Player player, Figure[][] board) {
+        return isThereFigureOn(position, board)
+                && !board[position.getRow()][position.getColumn()].getColor().equals(player.getColorOfFigures());
+    }
 }
