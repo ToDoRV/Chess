@@ -20,7 +20,7 @@ public class Board {
             Position.A2, Position.B2, Position.C2, Position.D2, Position.E2, Position.F2, Position.G2, Position.H2
     };
 
-    private Figure board[][];
+    private static Figure[][] board;
 
     public Board() {
         board = new Figure[BOARD_SIZE][BOARD_SIZE];
@@ -119,7 +119,7 @@ public class Board {
                 .equals(player.getColorOfFigures());
     }
 
-    public ErrorCode moveFigure(Position fromPosition, Position toPosition, Player player) {
+    public static ErrorCode moveFigure(Position fromPosition, Position toPosition, Player player) {
         ErrorCode errorCode = board[fromPosition.getRow()][fromPosition.getColumn()].canMove(toPosition, player, board);
 
         if (errorCode.equals(ErrorCode.Success)) {
@@ -129,7 +129,7 @@ public class Board {
         return errorCode;
     }
 
-    private ErrorCode move(Position fromPosition, Position toPosition) {
+    private static ErrorCode move(Position fromPosition, Position toPosition) {
         if (board[toPosition.getRow()][toPosition.getColumn()] != null
                 && board[toPosition.getRow()][toPosition.getColumn()] instanceof King) {
             System.out.print(TRY_TO_TAKE_KING);
