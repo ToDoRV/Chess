@@ -64,12 +64,7 @@ public class Game {
     }
 
     public void play() {
-        System.out.println();
-        System.out.println(WELCOME_MESSAGE);
-        System.out.println(MOVE_HELP_MESSAGE);
-        System.out.println(POSITIONS_HELP_MESSAGE);
-        System.out.println(END_GAME_HELP_MESSAGE);
-        System.out.println(GOOD_LUCK_MESSAGE);
+        printMessages();
 
         ErrorCode errorCode;
 
@@ -88,6 +83,15 @@ public class Game {
                 return;
             }
         }
+    }
+
+    private void printMessages() {
+        System.out.println();
+        System.out.println(WELCOME_MESSAGE);
+        System.out.println(MOVE_HELP_MESSAGE);
+        System.out.println(POSITIONS_HELP_MESSAGE);
+        System.out.println(END_GAME_HELP_MESSAGE);
+        System.out.println(GOOD_LUCK_MESSAGE);
     }
 
     private ErrorCode playWith(Player player) {
